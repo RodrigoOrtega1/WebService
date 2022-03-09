@@ -18,20 +18,21 @@ def peticion(lat, lon):
     if check_str(lat) == False or check_str(lon) == False:
         raise ValueError("Latitud y longitud deben ser cadenas de numeros")
 
-    llave = "102a5463b9e155623482213eebf35c45" #Colocar una key al API de openweathermap
+    llave = "" #Colocar una key al API de openweathermap
     url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={llave}&units=metric"
     respuesta = requests.get(url).json()
 
     nombre = respuesta['name']
-    # clima = respuesta['weather']['main']
+    clima = respuesta['weather'][0]['main']
     temperatura = respuesta['main']['temp']
     sensacion = respuesta['main']['feels_like']
 
     return {
         'nombre' : nombre,
+        'clima' : clima,
         'temperatura' : temperatura,
         'sensacion' : sensacion
     }
 
-respuesta = peticion("25.7785", "-100.107")
-print(respuesta)
+# respuesta = peticion("25.7785", "-100.107")
+# print(respuesta)
