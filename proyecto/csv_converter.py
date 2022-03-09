@@ -1,5 +1,8 @@
 import csv
 
+# Clase que implementa un convertidor de archivo csv a diccionario de python
+
+# Convierte un documento csv a diccionario de python
 def to_dic(doc_name, row1, row2):
     dic = {}
     with open(doc_name, mode = 'r') as inp:
