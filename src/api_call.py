@@ -23,4 +23,4 @@ def peticion(lat, lon):
     clima = respuesta['weather'][0]['main']
     temperatura = respuesta['main']['temp']
 
-    return f"{nombre} clima: {clima} temp: {temperatura}°C"
+    return f"{nombre}|clima:{clima}|temp:{temperatura}°C"
