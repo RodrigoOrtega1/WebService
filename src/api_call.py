@@ -4,7 +4,6 @@ import requests
 
 # Metodo que toma una cadena y ve si esta compuesta de numeros
 def check_str(str):
-    # Quita el simbolo de menos y divide la cadena en dos a partir del punto
     ls = str.lstrip("-").split(".")
     result = all(n.isdigit() for n in ls) and len(ls) <= 2
     return result

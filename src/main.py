@@ -2,6 +2,7 @@ from csv_converter import to_df
 from api_call import peticion
 import pandas as pd
 
+# Hace la peticion al api de openweathermap con los tokens dados
 def peticion_api(columna1, columna2):
     list = []
     for index, row in df.iterrows():
@@ -10,6 +11,7 @@ def peticion_api(columna1, columna2):
         list.append(f"[ORIGEN: {peticion(elementos1[0], elementos1[1])} ; DESTINO: {peticion(elementos2[0], elementos2[1])}]")
     return list
 
+# Manipula los datos dados para tomar solo los necesarios
 df = to_df('dataset1.csv').drop_duplicates()
 df['Origen'] = df['origin_latitude'].astype(str) + ',' + df['origin_longitude'].astype(str)
 df['Destino'] = df['destination_latitude'].astype(str) + ',' + df['destination_longitude'].astype(str)
