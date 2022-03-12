@@ -27,7 +27,11 @@ def peticion(lat, lon):
         raise ValueError("Latitud y longitud deben ser cadenas de numeros")
 
     llave = "" #Colocar una key al API de openweathermap
-    url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={llave}&units=metric"
+    if (llave and not llave.isspace()):
+        url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={llave}&units=metric"
+    else:
+        raise ValueError("El programa debe tener una llave del API de openweathermap")
+
     respuesta = requests.get(url).json()
 
     nombre = respuesta['name']
