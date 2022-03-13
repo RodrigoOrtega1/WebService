@@ -1,26 +1,29 @@
-from csv_converter import to_df
+from csv_converter import a_df
 from api_call import peticion
 import pandas as pd
 
-# Manipula los datos dados para tomar solo los necesarios
 def short_dataset(dataset):
-    df = to_df(dataset).drop_duplicates()
+    '''
+    Toma un archivo .csv
+    Regresa un DataFrame con la informacion necesaria
+    :param dataset: Un archivo .csv
+    :return: Un DataFrame con la informacion necesaria
+    '''
+    df = a_df(dataset).drop_duplicates()
     df['Origen'] = df['origin_latitude'].astype(str) + ',' + df['origin_longitude'].astype(str)
     df['Destino'] = df['destination_latitude'].astype(str) + ',' + df['destination_longitude'].astype(str)
     df.drop(columns=['origin', 'destination', 'origin_longitude', 'origin_latitude', 'destination_latitude', 'destination_longitude'], inplace=True)
     return df
 
 def peticion_api(df, columna1, columna2):
-    """
-    Toma dos columnas en formato DataFrame y con sus datos llama al API de
-    openweathermap
-    Params:
-        df          - El DataFrame a usar
-        columna1    - El nombre de la primera columna por la que se quiere iterar
-        columna2    - El nombre de la segunda columna por la que se quiere iterar
-    Returns:
-        list        - La lista con la respuesta del api
-    """
+    '''
+    Toma dos columnas de un DataFrame
+    Regresa una lista con la informacion de OpenWeatherMap
+    :param df: Un DataFrame
+    :param columna1: Una columna del DataFrame
+    :param columna2: Una columna del DataFrame
+    :return list: Una lista con informacion de OpenWeatherMap
+    '''
     list = []
     for index, row in df.iterrows():
         elementos1 = row[columna1].split(",")
@@ -28,13 +31,23 @@ def peticion_api(df, columna1, columna2):
         list.append(f"ORIGEN: {peticion(elementos1[0], elementos1[1])} - DESTINO: {peticion(elementos2[0], elementos2[1])}")
     return list
 
-def to_list(df):
-    return '\n'.join([str(x) for x in df])
+def to_str(list):
+    '''
+    Toma una lista
+    Regresa una cadena de la lista
+    :param list: Una lista
+    :return: Una cadena de la lista
+    '''
+    return '\n'.join([str(x) for x in list])
 
-df = short_dataset("data/dataset1.csv")
-print("Llamando al API... (puede tardar)")
-resp = peticion_api(df, "Origen", "Destino")
-resp_lst = to_list(resp)
-print("Resultado:")
-print(resp_lst)
-print("Programa completo.")
+def main():
+    df = short_dataset("data/dataset1.csv")
+    print("Llamando al API... (puede tardar)")
+    resp = peticion_api(df, "Origen", "Destino")
+    resp_str = to_str(resp)
+    print("Resultado:")
+    print(resp_str)
+    print("Programa completo.")
+
+if __name__ == '__main__':
+    main()
