@@ -24,6 +24,8 @@ def peticion_api(df, columna1, columna2):
     :param columna2: Una columna del DataFrame
     :return list: Una lista con informacion de OpenWeatherMap
     '''
+    if type(columna1) is not str or type(columna2) is not str:
+        raise ValueError("El nombre de la columna debe estar en una cadena")
     list = []
     for index, row in df.iterrows():
         elementos1 = row[columna1].split(",")
@@ -38,12 +40,14 @@ def to_str(list):
     :param list: Una lista
     :return: Una cadena de la lista
     '''
+    if type(list) is not list:
+        raise ValueError("Esta funcion solo admite listas")
     return '\n'.join([str(x) for x in list])
 
 def main():
     df = short_dataset("data/dataset1.csv")
     print("Llamando al API... (puede tardar)")
-    resp = peticion_api(df, "Origen", "Destino")
+    resp = peticion_api(df, "Hola", "Destino")
     resp_str = to_str(resp)
     print("Resultado:")
     print(resp_str)
