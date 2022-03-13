@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+import os
 import requests
 
 def es_num(str):
@@ -18,12 +20,13 @@ def peticion(lat, lon):
     :param lon: Una cadena con la longitud
     :return: Una cadena con el clima en las coordenadas dadas
     '''
+    load_dotenv()
     if type(lat) is not str or type(lon) is not str:
         raise ValueError("Latitud y longitud deben ser cadenas exclusivamente de numeros")
     if es_num(lat) == False or es_num(lon) == False:
         raise ValueError("Latitud y longitud deben ser cadenas exclusivamente de numeros")
 
-    llave = "" #Colocar llave de OpenWeatherMap
+    llave = os.getenv("llave")
     if (llave and not llave.isspace()):
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={llave}&units=metric"
     else:
